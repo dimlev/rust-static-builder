@@ -8,13 +8,7 @@ build-stable:
 push-stable: build-stable
 	docker push --all-tags $(IMAGE)
 
-build-nightly:
-	docker build --build-arg TOOLCHAIN=nightly --tag $(IMAGE)-nightly:$(CURRENT_DATE) --tag $(IMAGE)-nightly:latest .
-
-push-nightly: build-nightly
-	docker push --all-tags $(IMAGE)-nightly
-
 clean:
-	docker rmi $(IMAGE) $(IMAGE)-nightly
+	docker rmi $(IMAGE)
 
-.PHONY: build-stable push-stable build-nightly push-nightly clean
+.PHONY: build-stable push-stable clean
