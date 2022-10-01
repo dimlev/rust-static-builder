@@ -1,4 +1,4 @@
-IMAGE=fredrikfornwall/scratch-with-certificates
+IMAGE=dimlev/scratch-with-certificates
 
 build:
 	docker build -t $(IMAGE) .
