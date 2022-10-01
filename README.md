@@ -1,5 +1,4 @@
-[![Build status](https://github.com/fornwall/rust-static-builder/workflows/Build/badge.svg)](https://github.com/fornwall/rust-static-builder/actions?query=branch%3Amaster)
-[![Docker Hub](https://img.shields.io/docker/v/fredrikfornwall/rust-static-builder.svg?label=docker)](https://hub.docker.com/r/fredrikfornwall/rust-static-builder)
+[![Docker Hub](https://img.shields.io/docker/v/dimlev/rust-static-builder.svg?label=docker)](https://hub.docker.com/r/dimlev/rust-static-builder)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 
 # Rust static binary builder
@@ -10,10 +9,10 @@ From inside your project directoring containing a `Cargo.toml` file:
 
 ```sh
 # Stable release channel:
-docker run -v "$PWD":/build fredrikfornwall/rust-static-builder:1.61.0
+docker run -v "$PWD":/build dimlev/rust-static-builder:1.64.0
 
 # Nightly release channel:
-docker run -v "$PWD":/build fredrikfornwall/rust-static-builder-nightly:2020-05-09
+docker run -v "$PWD":/build dimlev/rust-static-builder-nightly:2022-10-01
 ```
 
 A statically linked binary will be created under `target/x86_64-unknown-linux-musl/release/`.
@@ -26,7 +25,7 @@ docker run \
        -v "$PWD":/build \
        -v $HOME/.cargo/git:/root/.cargo/git \
        -v $HOME/.cargo/registry:/root/.cargo/registry \
-       fredrikfornwall/rust-static-builder:1.61.0
+       dimlev/rust-static-builder:1.64.0
 ```
 
 ## Testing
@@ -38,7 +37,7 @@ docker run \
        -v $HOME/.cargo/git:/root/.cargo/git \
        -v $HOME/.cargo/registry:/root/.cargo/registry \
        --entrypoint cargo \
-       fredrikfornwall/rust-static-builder:1.61.0 \
+       dimlev/rust-static-builder:1.64.0 \
        test --target x86_64-unknown-linux-musl
 ```
 
@@ -49,7 +48,7 @@ By default the built binary will be stripped. Run with `-e NOSTRIP=1`, as in
 docker run \
        -e NOSTRIP=1 \
        -v "$PWD":/build \
-       fredrikfornwall/rust-static-builder:1.61.0
+       dimlev/rust-static-builder:1.64.0
 ```
 
 to disable stripping.
@@ -75,7 +74,7 @@ The rust-static-builder image contains statically libraries for the following im
 Note that if the projects needs certificates for OpenSSL a [base image containing /cacert.pem](scratch-with-certificates/Dockerfile) can be used when building a Docker image:
 
 ```dockerfile
-FROM fredrikfornwall/scratch-with-certificates
+FROM dimlev/scratch-with-certificates
 COPY target/x86_64-unknown-linux-musl/release/tls-using-executable /
 ENTRYPOINT ["/tls-using-executable"]
 ```
