@@ -11,8 +11,6 @@ From inside your project directoring containing a `Cargo.toml` file:
 # Stable release channel:
 docker run -v "$PWD":/build dimlev/rust-static-builder:1.64.0
 
-# Nightly release channel:
-docker run -v "$PWD":/build dimlev/rust-static-builder-nightly:2022-10-01
 ```
 
 A statically linked binary will be created under `target/x86_64-unknown-linux-musl/release/`.
