@@ -17,7 +17,7 @@ RUN curl https://sh.rustup.rs -sSf | \
     sh -s -- -y --default-toolchain $TOOLCHAIN && \
     /root/.cargo/bin/rustup target add x86_64-unknown-linux-musl
 
-RUN cd /tmp && LIBLZMA_VERSION=5.2.7 && \
+RUN cd /tmp && LIBLZMA_VERSION=5.2.10 && \
     curl -LO "https://tukaani.org/xz/xz-$LIBLZMA_VERSION.tar.xz" && \
     tar xf "xz-$LIBLZMA_VERSION.tar.xz" && cd xz-$LIBLZMA_VERSION && \
     CC=musl-gcc ./configure --enable-static --disable-shared --prefix=/usr/local/musl && \
@@ -39,7 +39,7 @@ RUN cd /tmp && ZLIB_VERSION=1.2.13 && \
     CC=musl-gcc ./configure --static --prefix=/usr/local/musl && \
     make install
 
-RUN cd /tmp && SQLITE_VERSION=sqlite-autoconf-3390400 && \
+RUN cd /tmp && SQLITE_VERSION=sqlite-autoconf-3400000 && \
     curl -LO https://www.sqlite.org/2022/$SQLITE_VERSION.tar.gz && \
     tar xf "$SQLITE_VERSION.tar.gz" && cd "$SQLITE_VERSION" && \
     CC=musl-gcc ./configure --enable-static --disable-shared --prefix=/usr/local/musl && \
