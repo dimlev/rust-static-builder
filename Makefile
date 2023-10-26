@@ -1,5 +1,5 @@
 IMAGE=dimlev/rust-static-builder
-STABLE_VERSION=1.67.0
+STABLE_VERSION=1.73.0
 CURRENT_DATE:=$(shell date "+%Y-%m-%d")
 
 build-stable:
@@ -14,5 +14,4 @@ push-latest: build-stable
 clean:
 	docker rmi $(IMAGE)
 
-.PHONY: build-stable push-stable clean
-
+.PHONY: build-stable push-stable push-latest
