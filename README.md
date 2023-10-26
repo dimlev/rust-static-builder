@@ -9,7 +9,7 @@ From inside your project directoring containing a `Cargo.toml` file:
 
 ```sh
 # Stable release channel:
-docker run -v "$PWD":/build dimlev/rust-static-builder:1.67.0
+docker run -v "$PWD":/build dimlev/rust-static-builder:1.73.0
 
 ```
 
@@ -23,7 +23,7 @@ docker run \
        -v "$PWD":/build \
        -v $HOME/.cargo/git:/root/.cargo/git \
        -v $HOME/.cargo/registry:/root/.cargo/registry \
-       dimlev/rust-static-builder:1.67.0
+       dimlev/rust-static-builder:1.73.0
 ```
 
 ## Testing
@@ -35,7 +35,7 @@ docker run \
        -v $HOME/.cargo/git:/root/.cargo/git \
        -v $HOME/.cargo/registry:/root/.cargo/registry \
        --entrypoint cargo \
-       dimlev/rust-static-builder:1.67.0 \
+       dimlev/rust-static-builder:1.73.0 \
        test --target x86_64-unknown-linux-musl
 ```
 
@@ -46,7 +46,7 @@ By default the built binary will be stripped. Run with `-e NOSTRIP=1`, as in
 docker run \
        -e NOSTRIP=1 \
        -v "$PWD":/build \
-       dimlev/rust-static-builder:1.67.0
+       dimlev/rust-static-builder:1.73.0
 ```
 
 to disable stripping.
