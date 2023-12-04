@@ -39,14 +39,14 @@ RUN cd /tmp && ZLIB_VERSION=1.3 && \
     CC=musl-gcc ./configure --static --prefix=/usr/local/musl && \
     make install
 
-RUN cd /tmp && SQLITE_VERSION=sqlite-autoconf-3430200 && \
+RUN cd /tmp && SQLITE_VERSION=sqlite-autoconf-3440200 && \
     curl -LO https://www.sqlite.org/2023/$SQLITE_VERSION.tar.gz && \
     tar xf "$SQLITE_VERSION.tar.gz" && cd "$SQLITE_VERSION" && \
     CC=musl-gcc ./configure --enable-static --disable-shared --prefix=/usr/local/musl && \
     make install
 
 RUN cd /tmp && BZ2_VERSION=1.0.8 && \
-    curl -LO https://sourceware.org/pub/bzip2/bzip2-$BZ2_VERSION.tar.gz && \
+    curl -LO https://mirrors.kernel.org/sourceware/bzip2/bzip2-$BZ2_VERSION.tar.gz && \
     tar xf "bzip2-$BZ2_VERSION.tar.gz" && cd "bzip2-$BZ2_VERSION" && \
     make CC=musl-gcc PREFIX=/usr/local/musl bzip2 && \
     make install PREFIX=/usr/local/musl
