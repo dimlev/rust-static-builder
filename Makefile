@@ -1,5 +1,5 @@
 IMAGE=dimlev/rust-static-builder
-STABLE_VERSION=1.73.0
+STABLE_VERSION=1.74.0
 CURRENT_DATE:=$(shell date "+%Y-%m-%d")
 
 build-stable:
