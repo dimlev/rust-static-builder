@@ -1,4 +1,4 @@
-FROM ubuntu:22.04
+FROM ubuntu:24.04
 
 ARG TOOLCHAIN
 
@@ -10,6 +10,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get -qq update && \
         git \
         musl-dev \
         musl-tools \
+        protobuf-compiler \
         pkg-config && \
     ln -s /usr/include/x86_64-linux-gnu/asm /usr/include/x86_64-linux-musl/asm
 
@@ -17,15 +18,15 @@ RUN curl https://sh.rustup.rs -sSf | \
     sh -s -- -y --default-toolchain $TOOLCHAIN && \
     /root/.cargo/bin/rustup target add x86_64-unknown-linux-musl
 
-RUN cd /tmp && LIBLZMA_VERSION=5.2.12 && \
+RUN cd /tmp && LIBLZMA_VERSION=5.8.1 && \
     curl -LO "https://tukaani.org/xz/xz-$LIBLZMA_VERSION.tar.xz" && \
     tar xf "xz-$LIBLZMA_VERSION.tar.xz" && cd xz-$LIBLZMA_VERSION && \
     CC=musl-gcc ./configure --enable-static --disable-shared --prefix=/usr/local/musl && \
     make install
 
 # See https://github.com/openssl/openssl/issues/7207 for "-idirafter" CC setting
-RUN cd /tmp && OPENSSL_VERSION=3.0.12 && \
-    curl -LO "https://www.openssl.org/source/openssl-$OPENSSL_VERSION.tar.gz" && \
+RUN cd /tmp && OPENSSL_VERSION=3.3.3 && \
+    curl -LO "https://github.com/openssl/openssl/releases/download/openssl-${OPENSSL_VERSION}/openssl-${OPENSSL_VERSION}.tar.gz" && \
     tar xf "openssl-$OPENSSL_VERSION.tar.gz" && cd "openssl-$OPENSSL_VERSION" && \
     env CC="musl-gcc -static -idirafter /usr/include/ -idirafter /usr/include/x86_64-linux-gnu/" ./Configure \
         no-shared no-zlib no-engine no-unit-test \
@@ -33,14 +34,14 @@ RUN cd /tmp && OPENSSL_VERSION=3.0.12 && \
     env C_INCLUDE_PATH=/usr/local/musl/include/ make depend && \
     make install_sw
 
-RUN cd /tmp && ZLIB_VERSION=1.3 && \
+RUN cd /tmp && ZLIB_VERSION=1.3.1 && \
     curl -LO "https://zlib.net/zlib-$ZLIB_VERSION.tar.gz" && \
     tar xf "zlib-$ZLIB_VERSION.tar.gz" && cd "zlib-$ZLIB_VERSION" && \
     CC=musl-gcc ./configure --static --prefix=/usr/local/musl && \
     make install
 
-RUN cd /tmp && SQLITE_VERSION=sqlite-autoconf-3440200 && \
-    curl -LO https://www.sqlite.org/2023/$SQLITE_VERSION.tar.gz && \
+RUN cd /tmp && SQLITE_VERSION=sqlite-autoconf-3500000 && \
+    curl -LO https://www.sqlite.org/2025/$SQLITE_VERSION.tar.gz && \
     tar xf "$SQLITE_VERSION.tar.gz" && cd "$SQLITE_VERSION" && \
     CC=musl-gcc ./configure --enable-static --disable-shared --prefix=/usr/local/musl && \
     make install
